@@ -1,3 +1,18 @@
+# Communicatie
+
+## PostService
+PostService zal communiceren met ReviewService via een eventbus omwille van de grootte van posts, en het belang van het aankomen van de posts.
+Postservice zal communiceren met CommentService via Openfeign Synchrone communicatie
+
+## ReviewService
+ReviewService zal communiceren met PostService via een eventbus omwille van het belang van de redacteurs dat hun spullen aankomen, en dat zij ook grote posts en bestanden binnenkrijgen.
+ReviewService zal communiceren met CommentService via Openfeign syunchrone communicatie
+
+## CommentService
+Commentservice zal met beide andere services synchroon communiceren via Openfeign.
+
+
+
 # Componenten
 
 ## Gateway
