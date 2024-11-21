@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysql-isha:
+    image: mysql:8.0
+    container_name: mysql-isha
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: isha
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-isha-data:/var/lib/mysql
+
+  mysql-hagrid:
+    image: mysql:8.0
+    container_name: mysql-hagrid
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hagrid
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-hagrid-data:/var/lib/mysql
+
+  mysql-jinx:
+    image: mysql:8.0
+    container_name: mysql-jinx
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: jinx
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-jinx-data:/var/lib/mysql
+
+volumes:
+  mysql-isha-data:
+  mysql-hagrid-data:
+  mysql-jinx-data:
