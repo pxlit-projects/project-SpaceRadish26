@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Post {
 
     @Id
@@ -23,6 +24,10 @@ public class Post {
     private String author;
 
     private LocalDateTime creationDate;
+
+    private boolean isConcept;
+
+    private boolean isApproved;
 
 
 }

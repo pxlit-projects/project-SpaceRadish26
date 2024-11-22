@@ -1,0 +1,39 @@
+<nav
+  class="bg-orange-100 shadow-md border-b border-orange-200"
+  style="max-height: 7vh;"
+>
+  <div class="container mx-auto flex items-center justify-between px-4 py-3">
+    <!-- Left: Home -->
+    <a
+      [routerLink]="['/posts']"
+      class="text-xl font-bold text-orange-600 hover:underline"
+    >
+      Home
+    </a>
+
+    <!-- Right: Links -->
+    <div class="flex items-center space-x-4">
+      <!-- Write -->
+      <a
+        [routerLink]="['/posts/write']"
+        class="flex items-center bg-orange-600 text-white px-4 py-2 rounded-full shadow-md hover:bg-orange-500 transition duration-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5 mr-2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Write
+      </a>
+    </div>
+  </div>
+</nav>
