@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { PostService } from '@services/post-service.service';
 import { PostCreate } from '@models/post-create.model';
 import {NgIf} from '@angular/common';
+import { AuthService } from '@services/auth-service.service';
 
 @Component({
   selector: 'app-write-post',
@@ -19,10 +20,10 @@ export class WritePostComponent implements OnInit {
 
   postService: PostService = inject(PostService);
   fb: FormBuilder = inject(FormBuilder);
+  authService: AuthService = inject(AuthService);
 
   ngOnInit(): void {
     this.postForm = this.fb.group({
-      author: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', [Validators.required, Validators.minLength(5)]],
       content: ['', [Validators.required, Validators.minLength(10)]],
       isConcept: [false]
@@ -31,8 +32,10 @@ export class WritePostComponent implements OnInit {
 
   submitPost(): void {
     if (this.postForm.valid) {
+      const user = this.authService.userSubject.value;
+      console.log(this.postForm.value.isConcept);
       const post: PostCreate = new PostCreate(
-        this.postForm.value.author,
+        user || 'Anonymous',
         this.postForm.value.title,
         this.postForm.value.content,
         this.postForm.value.isConcept

@@ -2,13 +2,6 @@
   <h2 class="text-2xl font-bold mb-6">Write a Post</h2>
   <form [formGroup]="postForm" (ngSubmit)="submitPost()">
     <div class="mb-4">
-      <label for="author" class="block text-sm font-medium text-gray-700">Author</label>
-      <input type="text" id="author" formControlName="author" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <div *ngIf="postForm.get('author')?.invalid && postForm.get('author')?.touched" class="text-red-500 text-sm">
-        Author is required and must be at least 3 characters long.
-      </div>
-    </div>
-    <div class="mb-4">
       <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
       <input type="text" id="title" formControlName="title" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
       <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" class="text-red-500 text-sm">

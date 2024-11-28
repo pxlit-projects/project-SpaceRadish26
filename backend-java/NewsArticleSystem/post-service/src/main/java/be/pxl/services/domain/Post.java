@@ -25,7 +25,7 @@ public class Post {
 
     private LocalDateTime creationDate;
 
-    private boolean isConcept;
+    private boolean concept;
 
     private boolean isApproved;
 

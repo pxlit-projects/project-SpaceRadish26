@@ -20,4 +20,8 @@ public class PostDTO {
 
         private String creationDate;
 
+        private boolean concept;
+
+        private boolean approved;
+
 }

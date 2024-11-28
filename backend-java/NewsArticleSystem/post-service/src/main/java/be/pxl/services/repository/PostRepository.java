@@ -8,5 +8,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
 
-    List<Post> findByIsConceptIs(boolean isConcept);
+    List<Post> findByConceptIs(boolean isConcept);
+
+    List<Post> findByAuthorAndConcept(String author, boolean concept);
 }

@@ -24,6 +24,6 @@ public class PostRequest {
     private String author;
 
     @NotNull
-    private boolean isConcept;
+    private boolean concept;
 
 }
