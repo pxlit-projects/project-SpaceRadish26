@@ -8,14 +8,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
+
+    private final List<String> allowedRoles = List.of("admin", "writer", "guest", "reader");
 
     private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
+    }
+
+
+    @GetMapping("/approved")
+    public ResponseEntity<?> getApprovedPosts(@RequestHeader("Role") String role) {
+        if (allowedRoles.contains(role)) {
+            return ResponseEntity.ok(postService.getApprovedPosts());
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @PostMapping
@@ -42,10 +58,21 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/approved-rejected")
+    public ResponseEntity<?> getApprovedRejectedPosts(@RequestHeader("Role") String role, @RequestHeader("Username") String username) {
+        if (allowedRoles.contains(role)) {
+            return ResponseEntity.ok(postService.getApprovedRejectedPosts(username));
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+    }
+
     @GetMapping
-    public ResponseEntity<?> getFinishedPosts(@RequestHeader("Role") String role) {
-        if (!role.isBlank()) {
-            return ResponseEntity.ok(postService.getFinishedPosts());
+    public ResponseEntity<?> getFinishedPosts(@RequestHeader("Role") String role, @RequestHeader("Username") String username) {
+        if (allowedRoles.contains(role)) {
+            return ResponseEntity.ok(postService.getFinishedPosts(username));
         }
         else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -53,9 +80,9 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPost(@PathVariable Long id, @RequestHeader("Role") String role) {
-        if (!role.isBlank()) {
-            return ResponseEntity.ok(postService.getPost(id));
+    public ResponseEntity<?> getPost(@PathVariable String id, @RequestHeader("Role") String role) {
+        if (allowedRoles.contains(role)) {
+            return ResponseEntity.ok(postService.getPost(UUID.fromString(id)));
         }
         else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -64,7 +91,7 @@ public class PostController {
 
     @GetMapping("/concepts")
     public ResponseEntity<?> getConceptPosts(@RequestHeader("Role") String role, @RequestHeader("Username") String username) {
-        if (!role.isBlank()) {
+        if (allowedRoles.contains(role)) {
             return ResponseEntity.ok(postService.getConceptPosts(username));
         }
         else {
@@ -73,9 +100,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable Long id, @RequestHeader("Role") String role) {
+    public ResponseEntity<?> deletePost(@PathVariable String id, @RequestHeader("Role") String role) {
         if (role.equals("admin") || role.equals("writer")) {
-            postService.deletePost(id);
+            postService.deletePost(UUID.fromString(id));
         }
         else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

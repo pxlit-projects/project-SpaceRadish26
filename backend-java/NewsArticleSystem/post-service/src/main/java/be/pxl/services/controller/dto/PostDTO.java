@@ -3,6 +3,8 @@ package be.pxl.services.controller.dto;
 
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -10,7 +12,7 @@ import lombok.*;
 @Builder
 public class PostDTO {
 
-        private Long id;
+        private String id;
 
         private String title;
 
@@ -23,5 +25,7 @@ public class PostDTO {
         private boolean concept;
 
         private boolean approved;
+
+        private String rejectedReason;
 
 }

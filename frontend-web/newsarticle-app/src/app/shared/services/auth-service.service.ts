@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  public roleSubject = new BehaviorSubject<string | null>(null);
+  public roleSubject = new BehaviorSubject<string>('guest');
   role$ = this.roleSubject.asObservable();
 
-  public userSubject = new BehaviorSubject<string | null>(null);
+  public userSubject = new BehaviorSubject<string>('guest');
   user$ = this.userSubject.asObservable();
 
   setRole(role: string) {

@@ -1,0 +1,20 @@
+<!-- src/app/usability/filter-modal/filter-modal.component.html -->
+<h3 mat-dialog-title>Filter Criteria</h3>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Author</mat-label>
+    <input matInput type="text" [(ngModel)]="filterAuthor">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Content</mat-label>
+    <input matInput type="text" [(ngModel)]="filterContent">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Date</mat-label>
+    <input matInput type="date" [(ngModel)]="filterDate">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="applyFilter()">Apply</button>
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

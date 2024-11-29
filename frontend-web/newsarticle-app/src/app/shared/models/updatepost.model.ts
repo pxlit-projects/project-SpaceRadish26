@@ -1,5 +1,5 @@
 export interface UpdatepostModel {
-  id: number;
+  id: string;
   title: string;
   content: string;
   concept: boolean;

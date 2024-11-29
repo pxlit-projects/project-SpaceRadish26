@@ -4,6 +4,7 @@ import { PostService } from '@services/post-service.service';
 import { PostCreate } from '@models/post-create.model';
 import {NgIf} from '@angular/common';
 import { AuthService } from '@services/auth-service.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-write-post',
@@ -17,7 +18,7 @@ import { AuthService } from '@services/auth-service.service';
 })
 export class WritePostComponent implements OnInit {
   postForm!: FormGroup;
-
+  router: Router = inject(Router);
   postService: PostService = inject(PostService);
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
@@ -41,6 +42,7 @@ export class WritePostComponent implements OnInit {
         this.postForm.value.isConcept
       );
       this.postService.addPost(post);
+      this.router.navigate(['/dashboard']);
     }
   }
 }

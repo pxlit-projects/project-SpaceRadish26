@@ -20,7 +20,7 @@ export class UpdatePostComponent implements OnInit {
   authService: AuthService = inject(AuthService);
   route: ActivatedRoute = inject(ActivatedRoute);
   post: Post | null = null;
-  updatePost: UpdatepostModel = {id: 0, title: '', content: '', concept: false};
+  updatePost: UpdatepostModel = {id: "", title: '', content: '', concept: false};
   canEdit: boolean = false;
 
   ngOnInit() {
@@ -31,9 +31,9 @@ export class UpdatePostComponent implements OnInit {
   loadPost() {
     const postId = this.route.snapshot.paramMap.get('id');
     if (postId) {
-      this.postService.getPostById(+postId).subscribe(post => {
+      this.postService.getPostById(postId).subscribe(post => {
         this.post = post;
-        this.updatePost = {id: +postId, title: this.post.title, content: this.post.content, concept: this.post?.concept || false};
+        this.updatePost = {id: postId, title: this.post.title, content: this.post.content, concept: this.post?.concept || false};
         console.log(('id= ' + postId + ' title= ' + this.post.title + ' content= ' + this.post.content + ' isConcept= ' + this.post.concept));
       });
     }

@@ -9,10 +9,10 @@ export class RoleGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const expectedRole = route.data['expectedRole'];
+    const expectedRoles: string[] = route.data['expectedRoles'];
     const currentRole = this.authService.roleSubject.value;
 
-    if (currentRole === expectedRole || currentRole === 'admin') {
+    if (expectedRoles.includes(currentRole) || currentRole === 'admin') {
       return true;
     } else {
       this.router.navigate(['/security/login']);

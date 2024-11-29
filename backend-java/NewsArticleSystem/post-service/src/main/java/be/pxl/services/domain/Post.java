@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -14,8 +15,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     private String title;
 
@@ -27,7 +27,8 @@ public class Post {
 
     private boolean concept;
 
-    private boolean isApproved;
+    private boolean approved = false;
 
+    private String rejectedReason = "";
 
 }

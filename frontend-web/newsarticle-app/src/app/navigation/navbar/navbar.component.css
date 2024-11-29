@@ -1,0 +1,14 @@
+.parallelogram {
+  display: inline-block;
+  background-color: #b2ebf2; /* Slightly darker than cyan-100 */
+  transform: skew(-20deg);
+  padding: 0.2rem 0.2rem;
+}
+
+.parallelogram button {
+  transform: skew(20deg);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}

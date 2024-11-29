@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class PostUpdateRequest {
 
     private String title;
     private String content;
-    private Long id;
+    private String id;
     private boolean concept;
 }
