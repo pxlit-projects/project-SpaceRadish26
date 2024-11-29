@@ -1,6 +1,6 @@
 .parallelogram {
   display: inline-block;
-  background-color: #b2ebf2; /* Slightly darker than cyan-100 */
+  background-color: coral; /* Slightly darker than cyan-100 */
   transform: skew(-20deg);
   padding: 0.2rem 0.2rem;
 }
@@ -11,4 +11,9 @@
   border: none;
   padding: 0;
   margin: 0;
+}
+
+.rotate-180 {
+  transform: rotate(90deg);
+  transition: transform 0.3s;
 }

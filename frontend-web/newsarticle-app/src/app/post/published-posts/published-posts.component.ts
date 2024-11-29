@@ -2,7 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { PostService } from '@services/post-service.service';
 import { Post } from '@models/post.model';
 import { Router } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { FilterModalComponent } from '@components/usability/filter-modal/filter-modal.component';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-published-posts',
@@ -10,7 +15,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   styleUrls: ['./published-posts.component.css']
 })
@@ -18,11 +23,9 @@ export class PublishedPostsComponent implements OnInit {
   posts!: Post[];
   postService: PostService = inject(PostService);
   router: Router = inject(Router);
-  filterAuthor: string = '';
-  filterContent: string = '';
-  filterDate: string = '';
-  isFilterModalOpen: boolean = false;
+  dialog: MatDialog = inject(MatDialog);
   filteredPosts: Post[] = [];
+
   ngOnInit(): void {
     this.postService.getApprovedPosts().subscribe(posts => {
       this.posts = posts;
@@ -35,23 +38,22 @@ export class PublishedPostsComponent implements OnInit {
   }
 
   openFilterModal(): void {
-    this.isFilterModalOpen = true;
+    const dialogRef = this.dialog.open(FilterModalComponent);
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.applyFilter(result);
+      }
+    });
   }
 
-  closeFilterModal(): void {
-    this.isFilterModalOpen = false;
+  applyFilter(filterData: any): void {
+    this.filteredPosts = this.posts.filter(post => {
+      return (!filterData.filterAuthor || post.author.includes(filterData.filterAuthor)) &&
+        (!filterData.filterContent || post.content.includes(filterData.filterContent)) &&
+        (!filterData.filterDate || new Date(post.creationDate).toDateString() === new Date(filterData.filterDate).toDateString());
+    });
   }
 
-  applyFilter(): void {
-    this.filterPosts();
-    this.closeFilterModal();
-  }
-
-  filterPosts(): void {
-    this.filteredPosts = this.posts.filter(post =>
-      (this.filterAuthor ? post.author.includes(this.filterAuthor) : true) &&
-      (this.filterContent ? post.content.includes(this.filterContent) : true) &&
-      (this.filterDate ? (post.creationDate && post.creationDate.slice(0, 10) === this.filterDate) : true)
-    );
-  }
+  protected readonly of = of;
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@services/auth-service.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginComponent {
     { name: 'Hagrid', role: 'admin' },
     { name: 'Mikumo', role: 'writer' }
   ];
-
+  router: Router = inject(Router);
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       selectedUser: ['']
@@ -32,6 +33,7 @@ export class LoginComponent {
       this.authService.setUser(selectedUser);
       const user = this.users.find(user => user.name === selectedUser);
       this.authService.setRole(user ? user.role : '');
+      this.router.navigate(['/dashboard']);
     }
   }
   logout() {
