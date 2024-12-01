@@ -5,11 +5,31 @@
       Home
     </a>
     <!-- Right: Dropdown Menu -->
-    <div class="parallelogram">
-      <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" class="text-amber-800 text-xl font-bold hover:underline focus:outline-none">
-        Menu
-        <mat-icon class="ml-2" [ngClass]="{'rotate-180': menuTrigger.menuOpen}">►</mat-icon>
-      </button>
+    <div class="flex items-center">
+      <!-- Bell Icon for Notifications -->
+      <ng-container *ngIf="authService.roleSubject.value != 'guest'">
+        <button class="mr-3" matBadgeColor="warn" matBadgeOverlap="true" matBadgeSize="medium" [matBadge]="notifications.length" [matBadgeHidden]="notifications.length === 0" mat-icon-button [matMenuTriggerFor]="notificationMenu" #notificationMenuTrigger="matMenuTrigger">
+          <mat-icon>notifications</mat-icon>
+        </button>
+        <mat-menu #notificationMenu="matMenu" class="bg-gray-50 border border-orange-200 rounded shadow-lg">
+          <ng-container *ngFor="let notification of notifications">
+            <div class="flex items-center justify-between px-4 py-2">
+              <button mat-menu-item [routerLink]="['/posts/improve', notification.postId]" class="text-orange-600 hover:bg-orange-100">
+                {{ notification.content }}
+              </button>
+              <button mat-icon-button (click)="deleteNotification(notification.notificationId)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+      <div class="parallelogram">
+        <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" class="text-amber-800 text-xl font-bold hover:underline focus:outline-none">
+          Menu
+          <mat-icon class="ml-2" [ngClass]="{'rotate-180': menuTrigger.menuOpen}">►</mat-icon>
+        </button>
+      </div>
     </div>
     <mat-menu #menu="matMenu" class="bg-gray-50 border border-orange-200 rounded shadow-lg">
       <ng-container class="bg-gray-50" *ngIf="authService.roleSubject.value === 'writer' || authService.roleSubject.value === 'admin'">

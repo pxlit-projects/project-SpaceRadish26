@@ -17,3 +17,11 @@
   transform: rotate(90deg);
   transition: transform 0.3s;
 }
+
+::ng-deep .mat-badge-content {
+  background-color: orangered !important;
+  color: white !important;
+  border-radius: 45% !important; /* Make it a circle */
+  transform: scale(0.8) !important;
+  font-size: 0.9em !important;
+}

@@ -176,4 +176,10 @@ public class PostService {
         logger.info("Filtered posts: " + result.size());
         return result;
     }
+
+
+    public String getPostAuthor(UUID id) {
+        Post post = postRepository.findById(id).orElseThrow();
+        return post.getAuthor();
+    }
 }

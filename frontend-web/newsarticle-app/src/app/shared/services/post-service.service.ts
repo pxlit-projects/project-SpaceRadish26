@@ -6,6 +6,8 @@ import {PostCreate} from '@models/post-create.model';
 import {AuthService} from '@services/auth-service.service';
 import {environment} from '../../../environments/environment';
 import {UpdatepostModel} from '@models/updatepost.model';
+import {List} from 'postcss/lib/list';
+import {NotificationModel} from '@models/notification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ import {UpdatepostModel} from '@models/updatepost.model';
 export class PostService {
   private apiUrl = environment.apiUrl;
   private reviewApiUrl = environment.reviewApiUrl;
+  private notificationUrl = environment.notificationUrl;
 
   http: HttpClient = inject(HttpClient);
   authService: AuthService = inject(AuthService);
@@ -77,6 +80,24 @@ export class PostService {
     });
   }
 
+  getNotificationsForUser(): Observable<NotificationModel[]> {
+    const role = this.authService.roleSubject.value;
+    const username = this.authService.userSubject.value;
+    const headers = new HttpHeaders()
+      .set('Role', role ? role : '')
+      .set('Username', username ? username : '');
+
+    return this.http.get<NotificationModel[]>(`${this.notificationUrl}`, { headers });
+  }
+
+  deleteNotification(id: string)  {
+    const role = this.authService.roleSubject.value;
+    const headers = new HttpHeaders().set('Role', role ? role : '');
+
+    this.http.delete(`${this.notificationUrl}/${id}`, { headers }).subscribe(response => {
+      console.log('Notification deleted', response);
+    });
+  }
 
   getApprovedAndRejectMessagedPosts(): Observable<Post[]> {
     const role = this.authService.roleSubject.value;

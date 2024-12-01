@@ -2,11 +2,14 @@ package be.pxl.services.services;
 
 import be.pxl.services.controller.dto.ReviewPostDTO;
 import be.pxl.services.domain.ReviewPost;
+import be.pxl.services.feign.NotificationClient;
+import be.pxl.services.feign.NotificationRequest;
 import be.pxl.services.repository.ReviewPostRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +20,13 @@ public class ReviewPostService {
 
     private final ReviewPostRepository reviewPostRepository;
     private final RabbitTemplate rabbitTemplate;
+    private final NotificationClient notificationClient;
 
     @Autowired
-    public ReviewPostService(ReviewPostRepository reviewPostRepository, RabbitTemplate rabbitTemplate) {
+    public ReviewPostService(ReviewPostRepository reviewPostRepository, RabbitTemplate rabbitTemplate, NotificationClient notificationClient) {
         this.reviewPostRepository = reviewPostRepository;
         this.rabbitTemplate = rabbitTemplate;
+        this.notificationClient = notificationClient;
     }
 
     @RabbitListener(queues = "myQueue")
@@ -43,6 +48,7 @@ public class ReviewPostService {
         reviewPostRepository.save(reviewPost);
     }
 
+    @Transactional
     public ReviewPost updateReviewStatus(UUID id, boolean approved, String rejectedReason) {
         ReviewPost reviewPost = reviewPostRepository.findById(id).orElseThrow();
         reviewPost.setApproved(approved);
@@ -51,6 +57,12 @@ public class ReviewPostService {
         System.out.println("Post rejected reason: " + reviewPost.getRejectedReason());
         reviewPostRepository.save(reviewPost);
         sendToPostService(reviewPost);
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .content("Your post has been reviewed")
+                .sender("review-service")
+                .postId(String.valueOf(reviewPost.getId()))
+                .build();
+        notificationClient.sendNotification(notificationRequest);
         reviewPostRepository.delete(reviewPost);
         return reviewPost;
     }
