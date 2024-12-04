@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterModalComponent } from '@components/usability/filter-modal/filter-modal.component';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {of} from 'rxjs';
 
 @Component({
@@ -56,4 +55,8 @@ export class PublishedPostsComponent implements OnInit {
   }
 
   protected readonly of = of;
+
+  viewDetailsOf(id: string) {
+    this.router.navigate([`/published-posts/${id}`]);
+  }
 }

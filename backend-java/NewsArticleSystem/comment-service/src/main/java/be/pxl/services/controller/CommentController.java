@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/comments")
 public class CommentController {
 
 
@@ -23,14 +23,16 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping
-    public List<CommentDto> getComments(@RequestBody String postId) {
-        return commentService.getCommentsByPostId(UUID.fromString(postId));
+    @GetMapping("/{id}")
+    public List<CommentDto> getComments(@PathVariable String id) {
+        return commentService.getCommentsByPostId(UUID.fromString(id));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable String id) {
-        commentService.deleteComment(UUID.fromString(id));
+    public ResponseEntity<?> deleteComment(@PathVariable String id, @RequestHeader("Role") String role, @RequestHeader("Username") String user) {
+        if (role.equals("admin") || role.equals("writer") || role.equals("reader")) {
+            commentService.deleteComment(UUID.fromString(id), user);
+        }
         return ResponseEntity.accepted().build();
     }
 
@@ -40,9 +42,12 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateComment(@RequestBody UpdateCommentRequest commentDto) {
-        commentService.updateComment(commentDto);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody UpdateCommentRequest commentDto, @RequestHeader("Role") String role, @RequestHeader("Username") String user) {
+        if (role.equals("admin") || role.equals("writer") || role.equals("reader")) {
+            commentDto.setId(id);
+            commentService.updateComment(commentDto, user);
+        }
         return ResponseEntity.ok().build();
     }
 }

@@ -1,6 +1,7 @@
 package be.pxl.services.domain;
 
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Comment {
 
     @Id

@@ -28,22 +28,30 @@ public class CommentService {
                 .build()).toList();
     }
 
-    public Comment createComment(CommentRequest comment) {
+    public void createComment(CommentRequest comment) {
         Comment commentToSave = Comment.builder()
                 .id(UUID.randomUUID())
                 .postId(UUID.fromString(comment.getPostId()))
                 .content(comment.getContent())
                 .author(comment.getAuthor())
                 .build();
-        return commentRepository.save(commentToSave);
+        commentRepository.save(commentToSave);
     }
 
-    public void deleteComment(UUID id) {
-        commentRepository.deleteById(id);
+    public void deleteComment(UUID id, String user) {
+        Comment commentToDelete = commentRepository.findById(id).orElseThrow();
+        if (commentToDelete.getAuthor().equals(user)) {
+            commentRepository.delete(commentToDelete);
+        } else {
+            throw new RuntimeException("You are not allowed to delete someone else's comment");
+        }
     }
 
-    public void updateComment(UpdateCommentRequest comment) {
+    public void updateComment(UpdateCommentRequest comment, String user) {
         Comment commentToUpdate = commentRepository.findById(UUID.fromString(comment.getId())).orElseThrow();
+        if (!commentToUpdate.getAuthor().equals(user)) {
+            throw new RuntimeException("You are not allowed to update someone else's comment");
+        }
         commentToUpdate.setContent(comment.getContent());
         commentRepository.save(commentToUpdate);
     }

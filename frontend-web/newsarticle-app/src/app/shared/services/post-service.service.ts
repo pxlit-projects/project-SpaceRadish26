@@ -8,6 +8,7 @@ import {environment} from '../../../environments/environment';
 import {UpdatepostModel} from '@models/updatepost.model';
 import {List} from 'postcss/lib/list';
 import {NotificationModel} from '@models/notification.model';
+import {Comment} from '@models/comment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class PostService {
   private apiUrl = environment.apiUrl;
   private reviewApiUrl = environment.reviewApiUrl;
   private notificationUrl = environment.notificationUrl;
-
+  private commentApiUrl = environment.commentApiUrl;
   http: HttpClient = inject(HttpClient);
   authService: AuthService = inject(AuthService);
 
@@ -34,6 +35,17 @@ export class PostService {
     const headers = new HttpHeaders().set('Role', role ? role : '');
 
     return this.http.get<Post>(`${this.reviewApiUrl}/${id}`, { headers });
+  }
+
+
+  getCommentsByPostId(id: string): Observable<Comment[]> {
+    const role = this.authService.roleSubject.value;
+    const username = this.authService.userSubject.value; // Assuming you have a usernameSubject in AuthService
+    const headers = new HttpHeaders()
+      .set('Role', role ? role : '')
+      .set('Username', username ? username : '');
+
+    return this.http.get<Comment[]>(`${this.commentApiUrl}/${id}`, { headers });
   }
 
   getConceptPostsForUser(): Observable<Post[]> {
@@ -121,5 +133,35 @@ export class PostService {
     const headers = new HttpHeaders().set('Role', role ? role : '');
 
     return this.http.get<Post[]>(`${this.apiUrl}/approved`, { headers });
+  }
+
+  createComment(newComment: Comment) {
+    const role = this.authService.roleSubject.value;
+    const username = this.authService.userSubject.value;
+    const headers = new HttpHeaders()
+      .set('Role', role ? role : '')
+      .set('Username', username ? username : '');
+
+    return this.http.post<Comment>(`${this.commentApiUrl}/create`, newComment, { headers });
+  }
+
+
+  updateComment(comment: Comment): Observable<Comment> {
+    const role = this.authService.roleSubject.value;
+    const username = this.authService.userSubject.value;
+    const headers = new HttpHeaders()
+      .set('Role', role ? role : '')
+      .set('Username', username ? username : '');
+
+    return this.http.put<Comment>(`${this.commentApiUrl}/update/${comment.id}`, comment, { headers });
+  }
+  deleteComment(id: string) {
+    const role = this.authService.roleSubject.value;
+    const username = this.authService.userSubject.value;
+    const headers = new HttpHeaders()
+      .set('Role', role ? role : '')
+      .set('Username', username ? username : '');
+
+    return this.http.delete<Comment>(`${this.commentApiUrl}/delete/${id}`, {headers});
   }
 }

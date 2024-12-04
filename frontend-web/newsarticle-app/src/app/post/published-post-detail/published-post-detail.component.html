@@ -1,0 +1,50 @@
+<div *ngIf="post" class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <!-- ... existing content ... -->
+
+  <div class="mt-8">
+    <h2 class="text-2xl font-semibold mb-4">Comments</h2>
+    <button (click)="reloadComments()" class="text-orange-500 hover:text-orange-700">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <hr>
+    <ng-container *ngIf="checkCommentRoles(); else loginMessage">
+      <button (click)="toggleCommentForm()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 mt-4">Create Comment</button>
+      <div *ngIf="showCommentForm" class="mt-4" [formGroup]="commentForm">
+        <textarea formControlName="content" class="w-full p-2 border rounded mb-2" rows="4" placeholder="Write your comment..."></textarea>
+        <div class="flex justify-end">
+          <button (click)="toggleCommentForm()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 mr-2">Cancel</button>
+          <button (click)="submitComment()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300">Confirm</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #loginMessage>
+      <p class="text-gray-600 mt-4">Please log in to create a comment.</p>
+    </ng-template>
+    <ul>
+      <li *ngFor="let comment of comments" class="mb-4 p-4 bg-white border border-orange-300 rounded-lg shadow-md flex justify-between items-center">
+        <div>
+          <p class="text-orange-800 font-bold">{{ comment.author }}</p>
+          <p class="text-gray-600">{{ comment.content }}</p>
+        </div>
+        <div *ngIf="comment.author === authService.userSubject.value" class="flex space-x-2">
+          <button (click)="startEditing(comment)" class="text-blue-500 hover:text-blue-700">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="deleteComment(comment.id)" class="text-red-500 hover:text-red-700">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="isEditing && this.editingComment.id == comment.id" class="mt-4 p-4 bg-white border border-orange-300 rounded-lg shadow-md">
+          <h3 class="text-lg font-bold text-orange-600 mb-2">Edit Comment</h3>
+          <textarea [(ngModel)]="editingComment.content" class="w-full p-2 border rounded mb-2" rows="4"></textarea>
+          <div class="flex justify-end">
+            <button (click)="cancelEditing()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 mr-2">Cancel</button>
+            <button (click)="confirmEditing()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300">Confirm</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+
+  </div>
+</div>
