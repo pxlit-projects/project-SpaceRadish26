@@ -40,7 +40,6 @@ public class NotificationService {
                 .userId(postService.getPostAuthor(UUID.fromString(notificationRequest2.getPostId())))
                 .postId(notificationRequest2.getPostId())
                 .build();
-        System.out.println(notification.getContent());
         notificationRepository.save(notification);
     }
 }

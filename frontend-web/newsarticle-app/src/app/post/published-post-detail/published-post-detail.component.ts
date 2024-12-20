@@ -3,7 +3,7 @@ import {PostService} from '@services/post-service.service';
 import {Post} from '@models/post.model';
 import {Comment} from '@models/comment.model';
 import {ActivatedRoute, Route, Router} from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '@services/auth-service.service';
 import {MatIcon} from '@angular/material/icon';
@@ -17,7 +17,8 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     NgIf,
     MatIcon,
-    FormsModule
+    FormsModule,
+    DatePipe
   ],
   styleUrls: ['./published-post-detail.component.css']
 })

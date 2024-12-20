@@ -8,6 +8,7 @@ import be.pxl.services.controller.request.PostUpdateRequest;
 import be.pxl.services.domain.Post;
 import be.pxl.services.exception.ConceptException;
 import be.pxl.services.repository.PostRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(PostService.class.getName());
+
 
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
@@ -54,7 +57,8 @@ public class PostService {
                     .approved(false)
                     .build();
             rabbitTemplate.convertAndSend("myQueue", postToSend);
-            System.out.println("Post sent for approval: " + postToSend.getTitle() + postToSend.getContent() + postToSend.getAuthor());
+
+            LOGGER.info("Post sent for approval: {} {} {}", postToSend.getTitle(), postToSend.getContent(), postToSend.getAuthor());
         }
     }
 
@@ -64,7 +68,7 @@ public class PostService {
         post.setApproved(reviewPostDTO.isApproved());
         post.setRejectedReason(reviewPostDTO.getRejectedReason());
         postRepository.save(post);
-        System.out.println("Post received from review service: " + reviewPostDTO.getTitle() + reviewPostDTO.getContent() + reviewPostDTO.getAuthor());
+        LOGGER.info("Post received from review service: {} {} {}", reviewPostDTO.getTitle(), reviewPostDTO.getContent(), reviewPostDTO.getAuthor());
     }
 
     @Transactional
@@ -77,6 +81,7 @@ public class PostService {
         if (!postUpdateRequest.isConcept()) {
             sendForApproval(post.getId());
         }
+        LOGGER.info("Post updated: {} {} {}", post.getTitle(), post.getContent(), post.getAuthor());
     }
 
     public List<PostDTO> getFinishedPosts(String username) {
@@ -93,7 +98,7 @@ public class PostService {
     }
 
     public List<PostDTO> getConceptPosts(String username) {
-        System.out.println("Username: " + username);
+        LOGGER.info("Fetching concept posts for {}", username);
         return postRepository.findByAuthorAndConcept(username, true).stream()
                 .map(post -> PostDTO.builder()
                         .id(String.valueOf(post.getId()))
@@ -109,7 +114,7 @@ public class PostService {
 
     @Transactional
     public void addPost(PostRequest postRequest) {
-        System.out.println("Post request: " + postRequest.getTitle() + postRequest.getContent() + postRequest.getAuthor() + postRequest.isConcept());
+        LOGGER.info("Post request: {} {} {} {}", postRequest.getTitle(), postRequest.getContent(), postRequest.getAuthor(), postRequest.isConcept());
         Post postToSave = Post.builder()
                 .id(UUID.randomUUID())
                 .title(postRequest.getTitle())
@@ -124,7 +129,7 @@ public class PostService {
         if (!postRequest.isConcept()) {
             sendForApproval(postToSave.getId());
         }
-        System.out.println("Post to save: " + postToSave.getTitle() + postToSave.getContent() + postToSave.getAuthor());
+       LOGGER.info("Post saved: {} {} {}", postToSave.getTitle(), postToSave.getContent(), postToSave.getAuthor());
 
     }
 
@@ -156,10 +161,10 @@ public class PostService {
     }
 
     public List<ReviewPostDTO> getApprovedRejectedPosts(String username) {
-        Logger logger = Logger.getLogger(PostService.class.getName());
+
 
         List<Post> posts = postRepository.findByAuthorAndConcept(username, false);
-        logger.info("Fetched posts: " + posts.size());
+
 
         List<ReviewPostDTO> result = posts.stream().filter(post -> post.isApproved() || ((post.getRejectedReason() != null && !Objects.equals(post.getRejectedReason(), ""))))
                 .map(post -> ReviewPostDTO.builder()
@@ -173,7 +178,7 @@ public class PostService {
                         .build())
                 .collect(Collectors.toList());
 
-        logger.info("Filtered posts: " + result.size());
+        LOGGER.info("Approved and rejected posts fetched for {}", username);
         return result;
     }
 

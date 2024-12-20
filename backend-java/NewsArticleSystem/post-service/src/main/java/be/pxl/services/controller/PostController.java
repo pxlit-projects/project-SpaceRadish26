@@ -48,8 +48,6 @@ public class PostController {
     @PutMapping("/update")
     public ResponseEntity<?> updatePost(@Valid @RequestBody PostUpdateRequest postUpdateRequest, @RequestHeader("Role") String role) {
         if (role.equals("admin") || role.equals("writer")) {
-            System.out.println(postUpdateRequest);
-            System.out.println(postUpdateRequest.isConcept());
             postService.updatePost(postUpdateRequest);
         }
         else {

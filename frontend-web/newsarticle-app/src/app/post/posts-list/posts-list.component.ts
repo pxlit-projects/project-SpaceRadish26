@@ -38,19 +38,8 @@ export class PostsListComponent implements OnInit {
   router: Router = inject(Router);
   dialog: MatDialog = inject(MatDialog);
 
-  ngOnInit(): void {
-    this.postService.getFinishedPosts().subscribe(posts => {
-      this.posts = posts;
-      this.filteredPosts = posts;
-    });
-    this.postService.getConceptPostsForUser().subscribe(posts => {
-      this.postConcepts = posts;
-      this.filteredPostConcepts = posts;
-    });
-    this.postService.getApprovedAndRejectMessagedPosts().subscribe(posts => {
-      this.approRejePosts = posts;
-      this.filteredApproRejePosts = posts;
-    });
+ngOnInit(): void {
+    this.refreshItems();
   }
 
   openFilterModal(): void {
@@ -93,4 +82,18 @@ export class PostsListComponent implements OnInit {
   }
 
 
+  refreshItems() {
+    this.postService.getFinishedPosts().subscribe(posts => {
+      this.posts = posts;
+      this.filteredPosts = posts;
+    });
+    this.postService.getConceptPostsForUser().subscribe(posts => {
+      this.postConcepts = posts;
+      this.filteredPostConcepts = posts;
+    });
+    this.postService.getApprovedAndRejectMessagedPosts().subscribe(posts => {
+      this.approRejePosts = posts;
+      this.filteredApproRejePosts = posts;
+    });
+  }
 }

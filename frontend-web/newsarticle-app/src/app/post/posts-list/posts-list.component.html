@@ -1,6 +1,9 @@
 <div class="flex justify-center items-center mt-8 mx-4">
   <button (click)="openFilterModal()" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition duration-300">Open Filter</button>
 </div>
+<div class="flex justify-center items-center mt-8 mx-4">
+  <button (click)="refreshItems()" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition duration-300">Refresh</button>
+</div>
 <div class="container">
   <mat-tab-group color="accent">
     <mat-tab label="My Concepts" class="">
@@ -17,7 +20,7 @@
     <mat-tab label="Pending Approval">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
         @for (post of filteredPosts; track post.id) {
-          <div (click)="navigateToUpdatePost(post.id)" class="post-card">
+          <div class="post-card">
             <h2>{{ post.title }}</h2>
             <p>{{ post.content }}</p>
             <p class="author">By {{ post.author }}</p>

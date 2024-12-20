@@ -39,13 +39,11 @@ export class NavbarComponent implements OnInit {
       this.postService.getNotificationsForUser().subscribe({
         next: (notifications) => {
           this.notifications = notifications;
-          console.log('Notifications:', this.notifications);
         },
         error: (error) => {
           console.error('Error fetching notifications:', error);
         },
         complete: () => {
-          console.log('Notification retrieval complete');
         }
       });
     }

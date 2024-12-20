@@ -1,5 +1,5 @@
 import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { PostService } from '@services/post-service.service';
 import { AuthService } from '@services/auth-service.service';
@@ -22,7 +22,7 @@ export class UpdatePostComponent implements OnInit {
   post: Post | null = null;
   updatePost: UpdatepostModel = {id: "", title: '', content: '', concept: false};
   canEdit: boolean = false;
-
+  router: any = inject(Router);
   ngOnInit() {
     this.loadPost();
     this.checkRole();
@@ -49,8 +49,9 @@ export class UpdatePostComponent implements OnInit {
   onSubmit(updatePostForm: NgForm) {
     if (updatePostForm.valid) {
       this.postService.updatePost(this.updatePost).subscribe(response => {
-        console.log('Post updated', response);
+        this.router.navigate(['/dashboard']);
       });
     }
+
   }
 }
