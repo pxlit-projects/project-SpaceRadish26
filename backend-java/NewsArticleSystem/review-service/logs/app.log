@@ -1,0 +1,20 @@
+2024-12-31T13:03:40.777+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Starting ReviewTests using Java 21.0.1 with PID 391360 (started by Brecht in D:\PXL\FSJavaEX\project-SpaceRadish26\backend-java\NewsArticleSystem\review-service)
+2024-12-31T13:03:40.778+0100 DEBUG              [main]                         be.pxl.services.ReviewTests   - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-31T13:03:40.778+0100 INFO               [main]                         be.pxl.services.ReviewTests   - No active profile set, falling back to 1 default profile: "default"
+2024-12-31T13:03:45.655+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Started ReviewTests in 6.32 seconds (process running for 16.616)
+2024-12-31T13:05:58.312+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Starting ReviewTests using Java 21.0.1 with PID 245232 (started by Brecht in D:\PXL\FSJavaEX\project-SpaceRadish26\backend-java\NewsArticleSystem\review-service)
+2024-12-31T13:05:58.312+0100 DEBUG              [main]                         be.pxl.services.ReviewTests   - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-31T13:05:58.313+0100 INFO               [main]                         be.pxl.services.ReviewTests   - No active profile set, falling back to 1 default profile: "default"
+2024-12-31T13:06:04.043+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Started ReviewTests in 7.149 seconds (process running for 16.806)
+2024-12-31T13:06:32.022+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Starting ReviewTests using Java 21.0.1 with PID 500304 (started by Brecht in D:\PXL\FSJavaEX\project-SpaceRadish26\backend-java\NewsArticleSystem\review-service)
+2024-12-31T13:06:32.022+0100 DEBUG              [main]                         be.pxl.services.ReviewTests   - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-31T13:06:32.022+0100 INFO               [main]                         be.pxl.services.ReviewTests   - No active profile set, falling back to 1 default profile: "default"
+2024-12-31T13:06:37.725+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Started ReviewTests in 7.136 seconds (process running for 16.57)
+2024-12-31T13:09:10.107+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Starting ReviewTests using Java 21.0.1 with PID 255888 (started by Brecht in D:\PXL\FSJavaEX\project-SpaceRadish26\backend-java\NewsArticleSystem\review-service)
+2024-12-31T13:09:10.107+0100 DEBUG              [main]                         be.pxl.services.ReviewTests   - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-31T13:09:10.108+0100 INFO               [main]                         be.pxl.services.ReviewTests   - No active profile set, falling back to 1 default profile: "default"
+2024-12-31T13:09:15.908+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Started ReviewTests in 7.202 seconds (process running for 16.739)
+2024-12-31T13:10:06.911+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Starting ReviewTests using Java 21.0.1 with PID 170692 (started by Brecht in D:\PXL\FSJavaEX\project-SpaceRadish26\backend-java\NewsArticleSystem\review-service)
+2024-12-31T13:10:06.911+0100 DEBUG              [main]                         be.pxl.services.ReviewTests   - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-31T13:10:06.912+0100 INFO               [main]                         be.pxl.services.ReviewTests   - No active profile set, falling back to 1 default profile: "default"
+2024-12-31T13:10:12.642+0100 INFO               [main]                         be.pxl.services.ReviewTests   - Started ReviewTests in 7.146 seconds (process running for 16.589)

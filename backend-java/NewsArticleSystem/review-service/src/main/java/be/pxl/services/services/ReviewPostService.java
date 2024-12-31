@@ -97,7 +97,7 @@ public class ReviewPostService {
                 .collect(Collectors.toList());
     }
 
-    private void sendToPostService(ReviewPost reviewPost) {
+    public void sendToPostService(ReviewPost reviewPost) {
         ReviewPostDTO reviewPostDTO = ReviewPostDTO.builder()
                 .id(String.valueOf(reviewPost.getId()))
                 .title(reviewPost.getTitle())

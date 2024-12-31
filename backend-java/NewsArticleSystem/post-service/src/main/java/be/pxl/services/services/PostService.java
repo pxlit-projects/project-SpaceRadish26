@@ -25,16 +25,18 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final RabbitTemplate rabbitTemplate;
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(PostService.class.getName());
 
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, RabbitTemplate rabbitTemplate) {
         this.postRepository = postRepository;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+
+
 
     public void deletePost(UUID id) {
         postRepository.deleteById(id);
