@@ -1,10 +1,9 @@
-// src/app/usability/filter-modal/filter-modal.component.ts
-import { Component } from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import { Component, EventEmitter, Output } from '@angular/core';
+import {MatDialogContent, MatDialogModule, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-filter-modal',
@@ -13,12 +12,12 @@ import {MatButton} from '@angular/material/button';
   imports: [
     MatFormField,
     MatInput,
-    MatDialogActions,
     FormsModule,
     MatButton,
+    MatLabel,
     MatDialogContent,
     MatDialogTitle,
-    MatLabel
+    MatDialogModule
   ],
   styleUrls: ['./filter-modal.component.css']
 })
@@ -27,14 +26,18 @@ export class FilterModalComponent {
   filterContent: string = '';
   filterDate: string = '';
 
+  @Output() filterApplied = new EventEmitter<any>();
+
   constructor(public dialogRef: MatDialogRef<FilterModalComponent>) {}
 
   applyFilter(): void {
-    this.dialogRef.close({
+    const filterData = {
       filterAuthor: this.filterAuthor,
       filterContent: this.filterContent,
       filterDate: this.filterDate
-    });
+    };
+    this.filterApplied.emit(filterData);
+    this.dialogRef.close();
   }
 
   close(): void {

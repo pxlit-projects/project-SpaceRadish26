@@ -39,10 +39,8 @@ export class PublishedPostsComponent implements OnInit {
   openFilterModal(): void {
     const dialogRef = this.dialog.open(FilterModalComponent);
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.applyFilter(result);
-      }
+    dialogRef.componentInstance.filterApplied.subscribe((filterData: any) => {
+      this.applyFilter(filterData);
     });
   }
 
