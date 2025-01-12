@@ -12,12 +12,14 @@
 - _demo-artifacts_: contains images, files, etc that are useful for demo purposes.
 - _frontend-web_: contains the Angular webclient
 
-Each folder contains its own specific `.gitignore` file.  
-**:warning: complete these files asap, so you don't litter your repository with binary build artifacts!**
-
 ## How to setup and run this application
 
-:heavy_check_mark:_(COMMENT) Add setup instructions and provide some direction to run the whole  application: frontend to backend._
+
+## Opstarten frontend
+Optie 1. Angular CLI server
+Optie 2. Dockerfile met commando ->  docker run -p 4201:80 angular-docker
+
+
 
 ## Opstartvolgorde backend:
 -> Config
