@@ -69,6 +69,7 @@ export class PublishedPostDetailComponent implements OnInit {
       this.commentForm.reset();
       this.showCommentForm = false;
     });
+    this.reloadComments();
   }
   reloadComments(): void {
     const postId = this.route.snapshot.paramMap.get('id') || '';
