@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     this.getNotifications();
     this.intervalId = setInterval(() => {
       this.getNotifications();
-    }, 5000);
+    }, 1200);
   }
 
   deleteNotification(id: string) {
